@@ -1,0 +1,5 @@
+1. Accept files as input
+2. Connect Third Party Data Storage Service
+    Store Personal Information
+    Store Change History
+3. Make Additional Data for RAG (More Advensed Finansial Topics)
