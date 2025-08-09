@@ -27,7 +27,19 @@ The content balances **technical guidance with emotional and behavioral insights
 
 ---
 
-## ✅ Phase 2: Data Processing & Indexing — **Completed**
+## ✅ Phase 2: Data Processing & Indexing — (**completed;** later issues found)
+
+**Issues identified (after completion):**
+- Chunk boundaries were incorrect: some chunks start mid-chapter and end in a different chapter/subchapter.
+- As a result, certain embeddings represent mixed/unrelated content, degrading retrieval precision and ranking stability.
+
+**Required corrections:**
+- [ ] Re-chunk strictly within chapter/subchapter boundaries.
+- [ ] Target chunk size **350 ± 50 GPT tokens** with **~15% soft overlap**.
+- [ ] Fix/normalize metadata, regenerate embeddings.
+- [ ] Create a new Chroma collection **`finance_book_v4`**; keep **`finance_book_v2`** and **`finance_book_v3`** for rollback and A/B comparison.
+
+**Previously completed work (unchanged):**
 
 - [x] 📄 **Extracted text from Word-Book** — converted the manuscript into a clean, machine-readable `.txt` file for consistent downstream processing.  
 - [x] 🧩 **Semantic chunking** — split content into meaning-preserving segments using cosine similarity between sentence-transformer embeddings (`all-MiniLM-L6-v2`). This ensured that each chunk contained a coherent unit of thought.  
@@ -57,6 +69,22 @@ Finally, the fully processed dataset was loaded into a persistent ChromaDB, crea
 ---
 
 ## 📅 Phase 3: Retriever Development — **Planned**
+
+## Phase 3 — Retriever Development (**in progress; paused pending Phase 2.1**)
+
+**Work completed so far:**
+- [x] Implemented **BM25** retriever.
+- [x] Implemented **Hybrid** retriever (**BM25 + dense embeddings**) with **Reciprocal Rank Fusion (RRF)**.
+- [x] Ran initial retrieval tests on collections **`finance_book_v2`** / **`finance_book_v3`**.
+
+**Issue discovered:**
+- Retrieval quality is limited by **flawed chunking from Phase 2** (cross-chapter chunks; embeddings mixing unrelated content).
+
+**Decision:**
+- **Pause Phase 3** and execute **Phase 2.1 — Rechunking** to fix boundaries, correct metadata, regenerate embeddings, and create **`finance_book_v4`**.
+- After **2.1**, **resume Phase 3** on the clean **v4** dataset and re-run evaluation/tuning.
+
+**Previously planned scope (unchanged):**
 
 - [ ] Implement **Hybrid Search** (BM25 + embeddings) for initial retrieval.
 - [ ] Prepare a **training dataset** (question → correct chunk) for retriever fine-tuning.
