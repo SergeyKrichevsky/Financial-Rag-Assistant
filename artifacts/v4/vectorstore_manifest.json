@@ -1,0 +1,57 @@
+{
+  "collection": {
+    "name": "finance_book_v4_cos",
+    "persist_dir": "chroma_store",
+    "vector_count": 172,
+    "embedding_dims": 384,
+    "hnsw": {
+      "space": "cosine"
+    },
+    "created_at": "2025-08-10"
+  },
+  "embedding_run": {
+    "config_ref": "configs/embedding_v4.json",
+    "script": "Data_Processing_and_Indexing/reembed_chroma_cosine_v4.py",
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "normalize_embeddings": true,
+    "batch_size": 128
+  },
+  "dataset": {
+    "path": "Data_Processing_and_Indexing/book_metadata_with_chapters_v4.json",
+    "records": 172,
+    "text_key": "text",
+    "metadata_keys": [
+      "chapter_title",
+      "chapter_number",
+      "position",
+      "source_id",
+      "category",
+      "has_* (boolean flags)"
+    ]
+  },
+  "probe": {
+    "query": "How to reset my personal finances step by step?",
+    "top_k": 3,
+    "results": [
+      {
+        "id": "fb-v4c-0149",
+        "chapter_title": "Chapter 11: Your Personal Finance Reset Plan — The 6 Steps in Action",
+        "position": 149,
+        "category": null
+      },
+      {
+        "id": "fb-v4c-0000",
+        "chapter_title": "Unknown",
+        "position": 0,
+        "category": null
+      },
+      {
+        "id": "fb-v4c-0148",
+        "chapter_title": "Next: Your Personal Finance Reset Plan — The 6 Steps in Action",
+        "position": 148,
+        "category": null
+      }
+    ]
+  },
+  "notes": "Embeddings are L2-normalized before indexing; HNSW uses cosine space. Metadata are scalars only; multi-label categories are also exposed as boolean flags has_<tag>."
+}

@@ -1,0 +1,77 @@
+{
+  "name": "hybrid_rrf_v1",
+  "description": "Hybrid retriever: BM25S (sparse) + Chroma (dense, cosine, L2-normalized) with RRF fusion, optional HyDE and Cross-Encoder rerank.",
+
+  "dense": {
+    "provider": "chroma",
+    "persist_dir": "chroma_store",
+    "collection": "finance_book_v4_cos",
+    "metric": "cosine",
+    "normalize_query": true,
+    "top_k": 30
+  },
+
+  "sparse": {
+    "provider": "bm25s",
+    "language": "en",
+    "lowercase": true,
+    "remove_accents": true,
+    "stopwords": "english",
+    "k1": 1.2,
+    "b": 0.75,
+    "top_k": 30
+  },
+
+  "fusion": {
+    "method": "rrf",
+    "k": 60,
+    "weights": { "dense": 1.0, "sparse": 1.0 }
+  },
+
+  "diversification": {
+    "method": "mmr",
+    "lambda": 0.7,
+    "final_k": 10,
+    "soft_quotas": {
+      "by_category": {
+        "enabled": true,
+        "max_per_category": 5
+      }
+    }
+  },
+
+  "filters": {
+    "default_where": {},
+    "allow_fields": ["chapter_number", "chapter_title", "category", "position", "source_id"],
+    "notes": "Use Chroma metadata filters with $and/$or/$in as needed; prefer soft quotas over hard filters for diversity."
+  },
+
+  "hyde": {
+    "enabled": true,
+    "max_prompts": 1,
+    "prompt_template": "Write a concise, helpful paragraph that directly answers the user question.",
+    "llm": "openai:gpt-4o-mini",
+    "use_for": ["dense"]
+  },
+
+  "reranker": {
+    "enabled": false,
+    "model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "top_k_input": 30,
+    "final_k": 8
+  },
+
+  "context_builder": {
+    "join_adjacent": true,
+    "max_chunk_words": 220,
+    "max_context_tokens": 1200,
+    "include_metadata_fields": ["chapter_title", "chapter_number", "category", "position", "source_id"],
+    "show_citations": true
+  },
+
+  "logging": {
+    "level": "INFO",
+    "trace_candidates": 30,
+    "store_last_query_run": true
+  }
+}

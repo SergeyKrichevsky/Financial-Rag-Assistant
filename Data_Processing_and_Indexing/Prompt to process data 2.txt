@@ -1,0 +1,26 @@
+You are a data cleaning expert preparing a book for a financial AI assistant using RAG.
+You will receive a JSON array where each item contains:
+- chapter_number
+- chapter_title
+- mode
+- topic
+- transition
+- text
+
+Your task:
+1. Remove any entries that do not contain meaningful financial content, such as:
+   - Book title, author name
+   - Copyright notices
+   - Design credits
+   - ISBN, publisher info
+   - Blank lines or pages
+2. Keep all content from Chapter 1, even if it is purely motivational or conceptual. This chapter sets the psychological tone and must be preserved in full.
+3. Keep chapter titles and section titles, but store them ONLY in metadata, not as separate "content" paragraphs.
+4. For the remaining items:
+   - If mode/topic was wrong, correct it according to the same rules:
+     mode: PRACTICAL | CONCEPT | MOTIVATION | STORY (can be multiple)
+     topic: mindset, diagnose, leaks, chaos, budgeting, debt, income, saving, resilience, stable_mind, reset_system, wealth
+   - Keep "transition" as yes or no.
+5. Return the cleaned JSON array with only useful paragraphs for the assistant.
+
+Output ONLY valid JSON.

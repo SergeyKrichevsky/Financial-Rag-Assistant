@@ -1,0 +1,59 @@
+{
+  "dataset_path": "Data_Processing_and_Indexing/book_metadata_with_chapters_v4.json",
+  "text_key": "text",
+  "id_pattern": "fb-v4c-{index:04d}",
+
+  "embedding": {
+    "framework": "sentence-transformers",
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "dims": 384,
+    "normalize_embeddings": true,
+    "pooling": "mean",
+    "precision": "float32"
+  },
+
+  "vectorstore": {
+    "provider": "chroma",
+    "persist_dir": "chroma_store",
+    "collection_name": "finance_book_v4_cos",
+    "hnsw": {
+      "space": "cosine"
+    }
+  },
+
+  "indexing": {
+    "batch_size": 128,
+    "created_at": "2025-08-10",
+    "created_by": "reembed_chroma_cosine_v4.py"
+  },
+
+  "metadata_mapping": {
+    "chapter_title": "chapter_title",
+    "chapter_number": "chapter_number",
+    "position": "position",
+    "source_id": "source_id",
+    "category_optional": "category"
+  },
+
+  "chunking": {
+    "unit": "words",
+    "target_range_words": [50, 150],
+    "overlap_words": 0,
+    "policy": "no-overlap; coherent block boundaries"
+  },
+
+  "probe_queries": [
+    "How to reset my personal finances step by step?"
+  ],
+
+  "dataset_stats": {
+    "total_records": 172,
+    "word_stats": { "min": 46, "p50": 56, "p95": 78, "max": 107 }
+  },
+
+  "versions": {
+    "python": "3.x",
+    "sentence_transformers": ">=5.1.0",
+    "chromadb": ">=0.5.5"
+  }
+}

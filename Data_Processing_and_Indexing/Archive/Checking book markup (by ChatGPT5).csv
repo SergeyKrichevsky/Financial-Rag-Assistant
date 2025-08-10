@@ -1,0 +1,10 @@
+Metric,Value
+Mode distribution,"{'PRACTICAL': 341, 'CONCEPT': 751, 'MOTIVATION': 121, 'STORY': 18}"
+Topic distribution,"{'mindset': 319, 'reset_system': 211, 'chaos': 177, 'diagnose': 152, 'saving': 109, 'income': 127, 'wealth': 85, 'stable_mind': 115, 'debt': 100, 'leaks': 138, 'budgeting': 102, 'resilience': 97}"
+Transition distribution,"{False: 1085, True: 60}"
+Unique chapter count,15
+Issues - missing_mode,0
+Issues - invalid_mode,0
+Issues - missing_topic,0
+Issues - invalid_transition,0
+Issues - missing_chapter,0
