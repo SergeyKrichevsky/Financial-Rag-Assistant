@@ -1,0 +1,21 @@
+{
+  "timestamp_utc": "2025-08-12T11:14:07.637913+00:00",
+  "chroma_path": "D:\\Dropbox\\MyDocuments\\Coding\\DI_Final_Project\\financial-rag-assistant\\chroma_store",
+  "collection": "finance_book_v4_cos",
+  "collection_size": 172,
+  "params": {
+    "k": 10,
+    "candidate_pool": 40,
+    "rrf_k": 60,
+    "mmr_lambda": 0.7
+  },
+  "summary": {
+    "queries": 20,
+    "k": 10,
+    "recall_at_k_mean": 1.0,
+    "ndcg_at_k_mean": 0.8951123818077276,
+    "mrr_at_k_mean": 0.9416666666666667,
+    "first_rel_rank_p50": 1.0,
+    "first_rel_rank_p95": 2.0
+  }
+}
