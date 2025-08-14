@@ -1,0 +1,45 @@
+{
+  "ts_unix": 1755177028.8035896,
+  "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+  "question_preview": "Как мне начать вести личный бюджет?",
+  "context_chars": 1639,
+  "num_refs": 5,
+  "refs": [
+    {
+      "id": "fb-v4c-0160",
+      "chapter": "Chapter 12: Reset Completed — Now What? Your First Steps Toward Wealth",
+      "position": 160,
+      "score": 0.02904040404040404,
+      "preview": "Choice Health and energy Peace of mind The ability"
+    },
+    {
+      "id": "fb-v4c-0162",
+      "chapter": "Chapter 12: Reset Completed — Now What? Your First Steps Toward Wealth",
+      "position": 162,
+      "score": 0.02877846790890269,
+      "preview": "Being patient and consistent Protecting your energ"
+    },
+    {
+      "id": "fb-v4c-0141",
+      "chapter": "Step 2: Stop Using Finances as a Measure of Self-Worth",
+      "position": 141,
+      "score": 0.02487789987789988,
+      "preview": "Step 2: Stop Using Finances as a Measure of Self-W"
+    },
+    {
+      "id": "fb-v4c-0158",
+      "chapter": "Chapter 11: Your Personal Finance Reset Plan — The 6 Steps in Action",
+      "position": 158,
+      "score": 0.02702702702702703,
+      "preview": "But for now — pause.\nYou’ve already created more c"
+    },
+    {
+      "id": "fb-v4c-0156",
+      "chapter": "Chapter 11: Your Personal Finance Reset Plan — The 6 Steps in Action",
+      "position": 156,
+      "score": 0.026144907723855092,
+      "preview": "🪜 Gradual wins (momentum > perfection) ⚙️ Systems "
+    }
+  ],
+  "answer_chars": 290
+}

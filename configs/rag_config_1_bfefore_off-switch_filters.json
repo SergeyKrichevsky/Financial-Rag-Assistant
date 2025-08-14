@@ -1,0 +1,21 @@
+{
+  "retriever": {
+    "k_default": 5,
+    "max_per_chapter": 2,
+    "exclude_chapters": [
+      "About the Author",
+      "Final Words",
+      "Acknowledgments",
+      "Table of Contents",
+      "Foreword",
+      "Preface",
+      "Index"
+    ]
+  },
+  "generator": {
+    "system_prompt_path": "configs/system_prompt.txt",
+    "max_context_chars": 6000,
+    "max_context_tokens": 900,
+    "token_encoding": "cl100k_base"
+  }
+}

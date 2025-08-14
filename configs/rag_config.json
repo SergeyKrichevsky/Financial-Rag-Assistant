@@ -1,0 +1,30 @@
+{
+  "retriever": {
+    "k_default": 5,
+    "max_per_chapter": 2,
+    "exclude_chapters": [
+      "About the Author",
+      "Final Words",
+      "Acknowledgments",
+      "Table of Contents",
+      "Foreword",
+      "Preface",
+      "Index"
+    ],
+    "use_filters": true,
+    "use_per_chapter_cap": true
+  },
+  "generator": {
+    "system_prompt_path": "configs/system_prompt.txt",
+    "max_context_chars": 6000,
+    "max_context_tokens": 900,
+    "token_encoding": "cl100k_base",
+    "use_sanitizer": true,
+    "use_token_cap": true
+  },
+  "logging": {
+    "runs_dir": "artifacts/v4/runs",
+    "history_file": "runs_history.jsonl",
+    "enable_history": true
+  }
+}
