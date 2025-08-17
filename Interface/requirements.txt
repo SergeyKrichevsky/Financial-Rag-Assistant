@@ -1,0 +1,53 @@
+# ==============================
+# requirements.txt
+# ==============================
+streamlit>=1.38
+
+
+# ==============================
+# Run Instructions (Linux/macOS)
+# ==============================
+
+# 1. Create virtual environment
+python3 -m venv .venv && source .venv/bin/activate
+
+# 2. Install dependencies
+pip install -U pip
+pip install -r requirements.txt
+
+# 3. Run UI in DEV (Developer Panel enabled)
+APP_ENV=DEV UI_DEFAULT_MODEL=chatgpt-5-micro streamlit run Interface/app.py
+
+# 4. Run UI in PROD (Developer Panel disabled)
+APP_ENV=PROD UI_DEFAULT_MODEL=chatgpt-5-mini streamlit run Interface/app.py
+
+
+# ==============================
+# Run Instructions (Windows PowerShell)
+# ==============================
+
+# 1. Create virtual environment
+python -m venv .venv ; .\.venv\Scripts\Activate.ps1
+
+# 2. Install dependencies
+python -m pip install -U pip
+pip install -r requirements.txt
+
+# 3. Run UI in DEV (Developer Panel enabled)
+setx APP_ENV "DEV" ; setx UI_DEFAULT_MODEL "chatgpt-5-micro"
+streamlit run Interface/app.py
+
+# 4. Run UI in PROD (Developer Panel disabled)
+setx APP_ENV "PROD" ; setx UI_DEFAULT_MODEL "chatgpt-5-mini"
+streamlit run Interface/app.py
+
+
+# ==============================
+# Notes
+# ==============================
+# - APP_ENV=DEV → UI shows checkbox "Enable Developer Panel"
+# - APP_ENV=PROD → panel is hidden
+# - UI_DEFAULT_MODEL sets initial model (chatgpt-5-micro / chatgpt-5-mini / chatgpt-5)
+# - No external API calls in Phase 5
+# - model.config.json is never modified (UI selection is runtime-only)
+# - After launch, open browser at http://localhost:8501

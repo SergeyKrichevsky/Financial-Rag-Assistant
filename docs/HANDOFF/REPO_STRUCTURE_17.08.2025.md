@@ -1,4 +1,4 @@
-# Repository Structure — Phase 4 Snapshot (2025-08-14)
+# Repository Structure — Phase 4–5 Snapshot (2025-08-17)
 
 ```text
 financial-rag-assistant/
@@ -52,6 +52,10 @@ financial-rag-assistant/
 │   ├── test_generate.py
 │   └── __pycache__/
 │
+├── Interface/                  # Phase 5: User Interface (Streamlit app)
+│   ├── app.py                  # Main UI entry point
+│   └── requirements.txt        
+│
 ├── artifacts/
 │   └── v4/
 │       ├── bm25_index/                     # Saved sparse index
@@ -74,13 +78,14 @@ financial-rag-assistant/
 │   ├── rag_config.json
 │   ├── rag_config_1_before_off-switch_filters.json
 │   ├── retriever_v1.json
-│   └── system_prompt.txt
+│   ├── system_prompt.txt
+│   └── models.ui.json             # Phase 5: UI models catalog (strict; required by Interface/app.py)
+
 │
 ├── docs/
 │   ├── HANDOFF/
 │   │   ├── ENV_SETUP.md
 │   │   ├── TECHNICAL_ASSIGNMENT.md
-│   │   └── REPO_STRUCTURE_v4_12.08.2025.md  # Older version; replaced by this file 
-│   │   └── REPO_STRUCTURE_14.08.2025.md  
+│   │   └── REPO_STRUCTURE.md  
 │   └── decisions/
 │       └── ADR-001-embedding-v4.md

@@ -1,0 +1,22 @@
+{
+  "models": [
+    {
+      "id": "chatgpt-5-micro",
+      "label": "ChatGPT 5.0 Micro",
+      "desc": "for testing / lowest cost",
+      "enabled": true
+    },
+    {
+      "id": "chatgpt-5-mini",
+      "label": "ChatGPT 5.0 Mini",
+      "desc": "balance of quality & cost",
+      "enabled": true
+    },
+    {
+      "id": "chatgpt-5",
+      "label": "ChatGPT 5.0",
+      "desc": "highest quality",
+      "enabled": true
+    }
+  ]
+}

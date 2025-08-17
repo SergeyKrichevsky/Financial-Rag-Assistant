@@ -1,4 +1,5 @@
-# 📊 Progress Log — AI Financial Assistant (RAG-Based)
+# 📊 Progress Log — AI Financial Assistant (RAG-Based) – Phase 5 Update (User Interface)
+**UTC:** 2025-08-17
 
 > Goal: Build a RAG system that answers user questions based on the book *The 6-Step Personal Finance Reset*.
 
@@ -210,44 +211,83 @@ Phase 2 transformed a raw manuscript into an **LLM-ready knowledge index**. The 
 
 ---
 
-## 📅 Phase 5: Next Steps (Planned)
+## 📅 Phase 5: User Interface 
 
-### 🔧 Core Engineering Tasks
-- [ ] Switch `model.config.json` backend to `"openai"`.
-- [ ] Add `.env` or environment variable loading (`OPENAI_API_KEY`).
-- [ ] Run `smoke_test_openai.py` to verify prompt routing.
-- [ ] Build a basic frontend (Streamlit / Gradio / FastAPI) with:
-  - Input box for questions.
-  - Output box for Final Answer.
-  - Developer info (context, prompt, tokens) toggleable.
-- [ ] Expose retrieval metadata in UI (chapter, position).
-- [ ] Consider Dockerizing for local demos.
+### Context / Purpose
+The fifth phase of the project corresponds to the creation of the **User Interface (UI)**.  
+The goal was to provide a simple, browser-based interface for test runs, model selection, and developer-focused inspection without yet integrating external APIs (postponed to Phase 6).
 
-### 🧪 Testing
-- [ ] Run CLI and E2E tests using actual API.
-- [ ] Validate logging schema via new runs.
-- [ ] Begin A/B testing: local vs OpenAI, different prompts, with/without caps.
+### Actions Taken
+- Created a dedicated folder `Interface/` with `app.py` as the main Streamlit entry point.
+- Implemented UI logic with:
+  - **Mode switcher**:  
+    - *Test Mode* (local stub, default).  
+    - *Connect API* (structure prepared, activation deferred to Phase 6).  
+  - **Branding**: `"Sergey Krichevskiy Group"`.
+  - **Model selector**: three options with descriptive labels (English):
+    - *ChatGPT 5.0 Micro* — for testing (cheapest).  
+    - *ChatGPT 5.0 Mini* — balance of price and quality.  
+    - *ChatGPT 5.0* — highest quality.
+- Added environment control via variables:  
+  - `APP_ENV = DEV` or `PROD`.  
+  - `UI_DEFAULT_MODEL` (sets the initial model).
+- Integrated **Developer Panel** (hidden by default, toggle via checkbox):
+  - Shows Phase 4 logs: `artifacts/v4/runs/*`, `runs_history.jsonl`.
+  - Displays config files: `system_prompt.txt`, `model.config.json`, `rag_config.json`.
+  - Provides **E2E test run**:
+    - Runs pipeline end-to-end (equivalent of `test_generate.py`).  
+    - Shows **Final Output** and **Developer Output** (refs + debug).  
+    - Logs are recorded as in Phase 4.
+- Solved Python path issues for module imports by appending project root to `sys.path`.
 
-### 🧱 Infra/Codebase
-- [ ] Clean and tag configs (`rag_config_v5.json`, `model.config.v5.json`).
-- [ ] Lock tokenizer (`tiktoken` fallback confirmed).
-- [ ] Store example run logs with realistic API output.
-- [ ] Add command-line help messages for all Phase 4 scripts.
+### Decisions Made
+- API integration is **explicitly postponed to Phase 6**, keeping Phase 5 UI purely local.
+- Developer Panel is designed for **local-only usage**, consistent with TA separation of developer vs user output.
+- Model selection will be centralized via a new JSON config file in Phase 6 (prepared discussion).
+- **Canonical internal model IDs (Phase 5 UI & Phase 6 router):**
+  - `chatgpt-5-micro` — **ChatGPT 5.0 Micro** (for testing / lowest cost)
+  - `chatgpt-5-mini`  — **ChatGPT 5.0 Mini** (balance of quality & cost)
+  - `chatgpt-5`       — **ChatGPT 5.0** (highest quality)
+  These IDs must match `configs/models.ui.json` and will be used by the API router in Phase 6.
 
----
+- The UI strictly requires `configs/models.ui.json`; if missing/invalid, the app stops with a clear error (no fallback).
 
-## 📎 Artifacts for Review
 
-- Generation system:
-  - `llm_integration/*.py`
-  - `model.config.json`, `rag_config.json`, `system_prompt.txt`
-- Logs:
-  - `artifacts/v4/runs/last_run_phase4.json`
-  - (optional) `runs_history.jsonl`
-- Entry points:
-  - `cli_ask.py`, `test_generate.py`
-- Documentation:
-  - See all files in `docs/HANDOFF/`
+### Results & Current State
+- Functional UI runs via:
+  ```bash
+  $Env:APP_ENV="DEV"; streamlit run Interface/app.py
+  ```
+- User can:
+  - Select between three models.  
+  - Run local test mode.  
+  - Enable Developer Panel and launch end-to-end runs.  
+- Logs and outputs match Phase 4 structure.
+- API toggle UI exists but backend not yet connected.
+
+### Parameters & Metadata
+- **Env:** Windows PowerShell / VS Code terminal.  
+- **Python:** 3.10+  
+- **Framework:** Streamlit  
+- **Files added/modified:**  
+  - `Interface/app.py` (new)  
+  - Adjustments to `.gitignore` / sys.path injection.  
+
+### Risks / Open Questions
+- Current E2E button uses a hard-coded query (from Phase 4). Needs replacement with **user-supplied input** → deferred to Phase 6.
+- No deployment yet (will be optional at end of Phase 6).
+- Developer Panel security: local-only, not intended for public deployment.
+
+### Next Steps
+- [ ] Phase 6: Implement new script `test_generate_from_ui.py` for user-input-driven E2E tests.  
+- [ ] Wire UI E2E button to this new script.  
+- [ ] Implement real API connection (single provider, three models).  
+- [ ] Add deployment option (Streamlit Community Cloud / Render).  
+- [ ] Finalize Progress Log and documentation cleanup post-Phase 6.
+
+### Source References
+- Internal project artifacts, configs, and Streamlit code created in Phase 5.  
+- Verification date: 2025-08-17
 
 ---
 

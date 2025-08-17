@@ -2,7 +2,7 @@
 
 **Purpose:** Enable a new ChatGPT session (with no prior memory) to generate all required handoff documents for the project, using only:
 1) this Technical Assignment,
-2) the current **REPO_STRUCTURE_v4.md**, and
+2) the current **REPO_STRUCTURE_17.08.2025.md**, and
 3) the current **Progress_Log_*.md** (latest).
 
 Everything below is authoritative for **Phase 4 (RAG Core)**. Phase 5 (UI/API) is planned but **not** executed yet (we explicitly defer API hookups & UI).
@@ -16,7 +16,7 @@ Everything below is authoritative for **Phase 4 (RAG Core)**. Phase 5 (UI/API) i
 ## 0) Project Snapshot (must appear consistently across all docs)
 
 - **Goal:** Personal-finance RAG assistant that answers user questions using a curated book as the knowledge base.
-- **Status (Aug 14, 2025):** **Phase 4 implemented and tested offline** (no external APIs). Phase 5 (**User Interface / API**) is deferred.
+- Status (Aug 17, 2025): Phase 4 completed and tested offline. Phase 5 delivered the initial Streamlit UI (local-only; no external API). API integration is explicitly deferred to Phase 6. The UI strictly requires `configs/models.ui.json`.
 - **Principle:** end users see **only the final answer**; developer metadata (retrieval refs, prompt, caps) is separate, hidden by default.
 
 **Core components (implemented in code):**
@@ -76,13 +76,17 @@ All files go under `docs/` and must be written in **one markdown code block each
 - **Pipeline:**  
   Retrieve top-K → Bridge filters/dedup/cap-per-chapter → `context_text` + `source_refs` → Generator loads system prompt → sanitize (dedupe + char cap) → token cap → Router `.complete(system,user)` → outputs: **Final** (user) and **Developer** (hidden).
 - **Separation of outputs:** end-user **never** sees sources/IDs by default; developer info is logged and can be toggled in future UI.
+- **Developer Panel (Phase 5, DEV-only):**  
+  - Visible only when `APP_ENV=DEV`.  
+  - Shows Phase-4 logs (`artifacts/v4/runs/*`, `runs_history.jsonl`) and config snapshots; provides an E2E test button.  
+  - Intended for local development; not for public deployments.
 - **Router contract:** unified `.complete(system_prompt, user_prompt) -> str`; model/backends switched via `model.config.json` and env (Phase 5).
 - **Sanitizer & caps:** character cap **and** token cap; both are togglable via off-switch flags.
 - **Retriever diversity controls:** `exclude_chapters`, `max_per_chapter` (both configurable; off-switch supported).
 - **Configs are the single source of truth** (no code edits required for tuning common parameters).
 
 ### 3.2 Configs (must be documented precisely)
-- `model.config.json` fields:
+- `model.config.json` (Location: llm_integration/model.config.json) fields:
   - `backend`: `"local_stub"` (Phase 4) or `"openai"` (Phase 5),
   - `model`: e.g., `"gpt-5-mini"` (used when backend = openai),
   - `temperature` (optional).
@@ -93,12 +97,45 @@ All files go under `docs/` and must be written in **one markdown code block each
 - `configs/system_prompt.txt`: file-based system instruction; editable without code changes.
 - **ENV (Phase 5 only):** `OPENAI_API_KEY` (deferred).
 
+- `configs/models.ui.json`: new Phase-5 file defining **available UI models**. 
+  - Example content:  
+    ~~~json
+    {
+      "models": [
+        { "id": "chatgpt-5-micro", "label": "ChatGPT 5.0 Micro", "desc": "for testing / lowest cost", "enabled": true },
+        { "id": "chatgpt-5-mini",  "label": "ChatGPT 5.0 Mini",  "desc": "balance of quality & cost", "enabled": true },
+        { "id": "chatgpt-5",       "label": "ChatGPT 5.0",       "desc": "highest quality",          "enabled": true }
+      ]
+    }
+
+    ~~~
+  - Purpose: UI reads available models from here, instead of hard-coding.  
+  - If file is missing or invalid → the UI must raise an explicit error and stop.
+
+
+
 ### 3.3 Commands (must appear in Run Guide)
 - CLI ask (with/without developer output):
   - `python -m llm_integration.cli_ask --q "Как начать вести бюджет?" --k 5`
   - `python -m llm_integration.cli_ask --q "Как начать вести бюджет?" --k 5 --show-dev`
 - E2E test:
   - `python -m llm_integration.test_generate`
+- **UI run (Phase 5 local-only)**  
+  - PowerShell (Windows):  
+    ~~~powershell
+    $Env:APP_ENV = "DEV"
+    streamlit run Interface/app.py
+    ~~~
+  - bash/zsh (macOS/Linux):  
+    ~~~bash
+    APP_ENV=DEV streamlit run Interface/app.py
+    ~~~
+  - Install UI deps:  
+    ~~~bash
+    pip install -r Interface/requirements.txt
+    ~~~
+  - Notes: `APP_ENV=DEV` shows the Developer Panel; `APP_ENV=PROD` hides it. The UI strictly requires `configs/models.ui.json`.
+
 - (Phase 5) Smoke test:
   - `python -m llm_integration.smoke_test_openai` (after switching backend to `"openai"` and setting `OPENAI_API_KEY`).
 
@@ -107,6 +144,7 @@ All files go under `docs/` and must be written in **one markdown code block each
   - `ts_unix` (float), `model` (str), `question_preview` (first ~200 chars),  
     `context_chars` (int), `num_refs` (int), `refs` (list of shallow refs), `answer_chars` (int).
 - **`artifacts/v4/runs/runs_history.jsonl`** — optional append-only history (one JSON per line) with the same payload structure; enabled via `logging.enable_history`.
+- artifacts/v4/runs/runs_history.jsonl — append-only
 
 ### 3.5 Data contracts (exact signatures)
 - `retrieve_context(question: str, k: Optional[int]) -> Tuple[str, List[Dict]]`
@@ -241,6 +279,15 @@ For each decision, include:
 
 **Acceptance:** the curator can rely on the log as the primary report.
 
+### 4.12 Phase-6 extension: User-driven E2E script
+- Add new script (planned for Phase 6) alongside `test_generate.py`.  
+- Instead of a fixed hard-coded question, it must accept the **user’s input** from the UI and run the full RAG → LLM pipeline.  
+- Purpose: connect Developer Panel with true end-to-end tests using live user input.  
+- The existing `test_generate.py` remains unchanged (keeps hard-coded default).  
+- The Developer Panel's "Run E2E" button must call this script to use the current **user-entered** question from the UI.
+
+
+
 ---
 
 ## 5) Style & Quality Bar
@@ -252,6 +299,8 @@ For each decision, include:
 - Verify all paths and commands against **REPO_STRUCTURE_v4.md**.
 - No secrets or API keys anywhere.
 - Include dates where relevant (use the date from Progress_Log).
+- UI labels and in-app texts must be **English**.  
+- Brand header: **Sergey Krichevskiy Group** (Phase 5 UI).
 
 ---
 
@@ -273,6 +322,9 @@ For each decision, include:
 - If `tiktoken` isn’t installed, token cap degrades to word-based trimming (safe).
 - The knowledge base is the curated **finance_book_v4** (see retriever metadata fields).
 - UI defaults must **hide** developer metadata; provide a toggle only for maintainers (Phase 5).
+- The Phase-5 UI **requires** `configs/models.ui.json` to exist and be valid (strict). Missing/invalid file must stop the UI with a clear error.
+- Developer Panel is **local-only** (DEV); do not expose it on public deployments.
+- Deployment is **deferred** to late Phase 6 (after tests), candidate: Streamlit Community Cloud or Render.
 
 ---
 
