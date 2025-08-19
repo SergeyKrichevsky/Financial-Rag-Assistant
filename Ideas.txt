@@ -1,0 +1,18 @@
+- Pass Entire Book to LLM (~22,000 tokens)
+--- Chat GPT5 can process up 256K-400K (API)
+--- Much better unswers
+--- More Expensive ~0.05$ per request
+(tokens ~ 30,000 input + ~1000 output)
+
+1. Usu "Assistant API" (Open ai).
+2. In UI - allow both methods (my embading + Assistant api).
+3. API key - add 2 options:
+- insert in the interface
+- use predefined
+- Give instructions how to use predrfined
+4. Use "DEV" option in my pipeline only.
+- give instructions how to run "DEV" & "USER" options 
+- by default - Only "user" option.
+
+
+

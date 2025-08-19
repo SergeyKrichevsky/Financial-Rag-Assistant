@@ -1,0 +1,7 @@
+{
+  "name": "Finance Assistant",
+  "assistant_id": "asst_REPLACE_ME",
+  "vector_store_id": "vs_68a4a55b054c8191ad631c7e94054f6d",
+  "model": "gpt-4.1-mini",
+  "notes": "IDs are non-secret. Assistant ID can be overridden via ENV (ASSISTANT_ID) or the UI field."
+}

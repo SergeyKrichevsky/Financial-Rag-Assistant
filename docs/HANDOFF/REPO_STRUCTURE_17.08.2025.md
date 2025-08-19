@@ -13,7 +13,8 @@ financial-rag-assistant/
 │   ├── query_chroma_v4.py
 │   ├── reembed_chroma_cosine_v4.py
 │   ├── sanity_hist_words.png
-│   ├── Final - The_6‑Step_Personal_Finance_Reset_6x9_my_hand_breaks.docx
+│   ├── Final - The_6-Step_Personal_Finance_Reset-Book.docx
+│   ├── Final - The_6-Step_Personal_Finance_Reset-Book.pdf
 │   ├── Prompt to process data.txt
 │   └── Prompt to process data 2.txt
 │
@@ -79,6 +80,7 @@ financial-rag-assistant/
 │   ├── rag_config_1_before_off-switch_filters.json
 │   ├── retriever_v1.json
 │   ├── system_prompt.txt
+│   ├── system_prompt_assistant_API.txt
 │   └── models.ui.json             # Phase 5: UI models catalog (strict; required by Interface/app.py)
 
 │
