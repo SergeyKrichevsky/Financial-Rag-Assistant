@@ -169,7 +169,12 @@ streamlit run Interface/app.py
 
 ---
 
+## 15) Demo Video
 
+Watch a short video walkthrough of the project here:  
+[**▶️ Project Demo Video**](https://youtu.be/SWiWIa6_0Rc)
+
+---
 
 ## Operations / Handover
 For operational details, configuration tips, troubleshooting, and demo guidelines,  
